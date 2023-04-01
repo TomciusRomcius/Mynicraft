@@ -5,9 +5,8 @@ namespace Engine3D
 {
 	VBO::VBO(const std::vector<glm::vec3>& vertices, const std::vector<glm::vec2> texCoords)
 	{
-		unsigned int VAO;
-		glGenVertexArrays(1, &VAO);
-		glBindVertexArray(VAO);
+		glGenVertexArrays(1, &vao);
+		glBindVertexArray(vao);
 		glGenBuffers(1, &id);
 
 		EN_TRACE("Creating vertex buffer object id = " + std::to_string(id));
@@ -29,9 +28,8 @@ namespace Engine3D
 	}
 	VBO::VBO(const std::vector<glm::vec3>& vertices)
 	{
-		unsigned int VAO;
-		glGenVertexArrays(1, &VAO);
-		glBindVertexArray(VAO);
+		glGenVertexArrays(1, &vao);
+		glBindVertexArray(vao);
 		glGenBuffers(1, &id);
 
 		EN_TRACE("Creating vertex buffer object id = " + std::to_string(id));
@@ -41,13 +39,16 @@ namespace Engine3D
 		glBufferData(GL_ARRAY_BUFFER, vertices.size() * 3 * sizeof(float), vertices.data(), GL_STATIC_DRAW);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 		glEnableVertexAttribArray(0);
-
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
 	}
 
 	void VBO::Bind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, id);
+		glBindVertexArray(vao);
 	}
+
 	VBO::~VBO()
 	{
 		EN_TRACE("Deleting vertex buffer object id = " + std::to_string(id));

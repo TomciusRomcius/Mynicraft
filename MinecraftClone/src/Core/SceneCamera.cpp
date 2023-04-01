@@ -19,11 +19,14 @@ namespace Engine3D
 		float dx = Event::mousePos.x - lastMousePos.x;
 		float dy = Event::mousePos.y - lastMousePos.y;
 
-		yaw += dx * sensitivity * Time::DeltaTime;
-		pitch -= dy * sensitivity * Time::DeltaTime;
+		yaw -= dx * sensitivity * Time::DeltaTime;
+		pitch += dy * sensitivity * Time::DeltaTime;
 
 		if (pitch > 90.f) pitch = 90.f; // Clamping
 		if (pitch < -90.f) pitch = -89.f;
+
+		std::cout << "Position: " << position.x << " " << position.y << std::endl;
+		std::cout << "Rotation: " << yaw << " " << pitch << std::endl << std::endl;
 
 		// Getting the direction in which the camera is facing
 		direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
@@ -39,9 +42,9 @@ namespace Engine3D
 		if (Event::GetKey(GLFW_KEY_S))
 			position -= cameraSpeed * direction * Time::DeltaTime;
 		if (Event::GetKey(GLFW_KEY_A))
-			position -= glm::normalize(glm::cross(direction, up)) * cameraSpeed * Time::DeltaTime;
-		if (Event::GetKey(GLFW_KEY_D))
 			position += glm::normalize(glm::cross(direction, up)) * cameraSpeed * Time::DeltaTime;
+		if (Event::GetKey(GLFW_KEY_D))
+			position -= glm::normalize(glm::cross(direction, up)) * cameraSpeed * Time::DeltaTime;
 	}
 	glm::mat4 SceneCamera::ViewMatrix()
 	{

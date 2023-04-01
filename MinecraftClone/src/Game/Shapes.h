@@ -67,6 +67,44 @@ struct Cube
         20, 21, 22,
         22, 23, 20
     };
+    std::vector<glm::vec2> texCoords =
+    {
+        // Front face
+        {0.0f, 0.0f},
+        {1.0f, 0.0f},
+        {1.0f, 1.0f},
+        {0.0f, 1.0f},
+
+        // Back face
+        {1.0f, 0.0f},
+        {1.0f, 1.0f},
+        {0.0f, 1.0f},
+        {0.0f, 0.0f},
+
+        // Top face
+        {0.0f, 1.0f},
+        {0.0f, 0.0f},
+        {1.0f, 0.0f},
+        {1.0f, 1.0f},
+
+        // Bottom face
+        {1.0f, 1.0f},
+        {0.0f, 1.0f},
+        {0.0f, 0.0f},
+        {1.0f, 0.0f},
+
+        // Right face
+        {1.0f, 0.0f},
+        {1.0f, 1.0f},
+        {0.0f, 1.0f},
+        {0.0f, 0.0f},
+
+        // Left face
+        {0.0f, 0.0f},
+        {1.0f, 0.0f},
+        {1.0f, 1.0f},
+        {0.0f, 1.0f}
+    };
 };
 
 struct Background
@@ -74,12 +112,12 @@ struct Background
     std::vector<glm::vec3> vertices = {
     {-1.0f, -1.0f, 0.0f},
     {-1.0f,  1.0f, 0.0f},
-    { 1.0f, -1.0f, 0.0f},
-    { 1.0f,  1.0f, 0.0f}
+    { 1.0f, 1.0f, 0.0f},
+    { 1.0f,  -1.0f, 0.0f}
     };
 
     std::vector<unsigned int> indices = {
         0, 1, 2,
-        2, 1, 3
+        2, 3, 0
     };
 };

@@ -13,6 +13,7 @@ namespace Engine3D
 		~VBO();
 	private:
 		unsigned int id;
+		unsigned int vao;
 	};
 
 }

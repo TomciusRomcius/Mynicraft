@@ -107,5 +107,6 @@
     <None Include="src\Shaders\fragment.shader" />
     <None Include="src\Shaders\backgroundfrag.shader" />
     <None Include="src\Shaders\vertex.shader" />
+    <None Include="src\Shaders\backgroundvert.shader" />
   </ItemGroup>
 </Project>
