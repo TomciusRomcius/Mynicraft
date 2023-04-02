@@ -1,73 +1,41 @@
+#pragma once
 #include "pch.h"
 
-struct Cube
-{
-    std::vector<glm::vec3> vertices =
+
+    inline std::vector<glm::vec3> CUBE_VERTICES =
     {
-        // Front face
-        {-0.5f, -0.5f, 0.5f},
-        {0.5f, -0.5f, 0.5f},
-        {0.5f, 0.5f, 0.5f},
-        {-0.5f, 0.5f, 0.5f},
-
-        // Back face
-        {-0.5f, -0.5f, -0.5f},
-        {-0.5f, 0.5f, -0.5f},
-        {0.5f, 0.5f, -0.5f},
-        {0.5f, -0.5f, -0.5f},
-
-        // Top face
-        {-0.5f, 0.5f, -0.5f},
-        {-0.5f, 0.5f, 0.5f},
-        {0.5f, 0.5f, 0.5f},
-        {0.5f, 0.5f, -0.5f},
-
-        // Bottom face
-        {-0.5f, -0.5f, -0.5f},
-        {0.5f, -0.5f, -0.5f},
-        {0.5f, -0.5f, 0.5f},
-        {-0.5f, -0.5f, 0.5f},
-
-        // Right face
-        {0.5f, -0.5f, -0.5f},
-        {0.5f, 0.5f, -0.5f},
-        {0.5f, 0.5f, 0.5f},
-        {0.5f, -0.5f, 0.5f},
-
-        // Left face
-        {-0.5f, -0.5f, -0.5f},
-        {-0.5f, -0.5f, 0.5f},
-        {-0.5f, 0.5f, 0.5f},
-        {-0.5f, 0.5f, -0.5f}
+    { -0.5f, -0.5f,  0.5f }, // 0: Front bottom left
+    {  0.5f, -0.5f,  0.5f }, // 1: Front bottom right
+    {  0.5f,  0.5f,  0.5f }, // 2: Front top right
+    { -0.5f,  0.5f,  0.5f }, // 3: Front top left
+    { -0.5f, -0.5f, -0.5f }, // 4: Back bottom left
+    {  0.5f, -0.5f, -0.5f }, // 5: Back bottom right
+    {  0.5f,  0.5f, -0.5f }, // 6: Back top right
+    { -0.5f,  0.5f, -0.5f }  // 7: Back top left
     };
 
-    std::vector<unsigned int> indices =
+    inline std::vector<unsigned int> CUBE_INDICES =
     {
         // Front face
         0, 1, 2,
         2, 3, 0,
-
         // Back face
-        4, 5, 6,
-        6, 7, 4,
-
+        5, 4, 7,
+        7, 6, 5,
         // Top face
-        8, 9, 10,
-        10, 11, 8,
-
+        3, 2, 6,
+        6, 7, 3,
         // Bottom face
-        12, 13, 14,
-        14, 15, 12,
-
+        0, 4, 5,
+        5, 1, 0,
         // Right face
-        16, 17, 18,
-        18, 19, 16,
-
+        1, 5, 6,
+        6, 2, 1,
         // Left face
-        20, 21, 22,
-        22, 23, 20
+        4, 0, 3,
+        3, 7, 4
     };
-    std::vector<glm::vec2> texCoords =
+    inline std::vector<glm::vec2> CUBE_TEXCOORDS =
     {
         // Front face
         {0.0f, 0.0f},
@@ -105,19 +73,3 @@ struct Cube
         {1.0f, 1.0f},
         {0.0f, 1.0f}
     };
-};
-
-struct Background
-{
-    std::vector<glm::vec3> vertices = {
-    {-1.0f, -1.0f, 0.0f},
-    {-1.0f,  1.0f, 0.0f},
-    { 1.0f, 1.0f, 0.0f},
-    { 1.0f,  -1.0f, 0.0f}
-    };
-
-    std::vector<unsigned int> indices = {
-        0, 1, 2,
-        2, 3, 0
-    };
-};
