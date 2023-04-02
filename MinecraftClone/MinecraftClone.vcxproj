@@ -78,7 +78,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;GLEW_STATICWIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)/src;$(ProjectDir)\src\pch;$(SolutionDir)\vendor\glfw\include;$(SolutionDir)\vendor\spdlog\include;$(SolutionDir)\vendor\glew\include;$(SolutionDir)\vendor\glm-master\;$(SolutionDir)\vendor\stb\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\vendor\PerlinNoise;$(ProjectDir)/src;$(ProjectDir)\src\pch;$(SolutionDir)\vendor\glfw\include;$(SolutionDir)\vendor\spdlog\include;$(SolutionDir)\vendor\glew\include;$(SolutionDir)\vendor\glm-master\;$(SolutionDir)\vendor\stb\include</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -111,7 +111,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;GLEW_STATIC_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)/src;$(ProjectDir)\src\pch;$(SolutionDir)\vendor\glfw\include;$(SolutionDir)\vendor\spdlog\include;$(SolutionDir)\vendor\glew\include;$(SolutionDir)\vendor\glm-master\;$(SolutionDir)\vendor\stb\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\vendor\PerlinNoise;$(ProjectDir)/src;$(ProjectDir)\src\pch;$(SolutionDir)\vendor\glfw\include;$(SolutionDir)\vendor\spdlog\include;$(SolutionDir)\vendor\glew\include;$(SolutionDir)\vendor\glm-master\;$(SolutionDir)\vendor\stb\include</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -149,6 +149,7 @@
     <ClCompile Include="src\Core\Texture.cpp" />
     <ClCompile Include="src\Core\Time.cpp" />
     <ClCompile Include="src\Core\VBO.cpp" />
+    <ClCompile Include="src\Game\Chunk.cpp" />
     <ClCompile Include="src\Game\Shapes.h" />
     <ClCompile Include="src\Game\main.cpp" />
     <ClCompile Include="src\pch\pch.cpp">
@@ -169,14 +170,13 @@
     <ClInclude Include="src\Core\Texture.h" />
     <ClInclude Include="src\Core\Time.h" />
     <ClInclude Include="src\Core\VBO.h" />
+    <ClInclude Include="src\Game\Chunk.h" />
     <ClInclude Include="src\pch\pch.h" />
     <ClInclude Include="src\Game\Window.h" />
     <ClInclude Include="src\Game\World.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="src\Shaders\backgroundfrag.shader" />
-    <None Include="src\Shaders\backgroundvert.shader" />
     <None Include="src\Shaders\fragment.shader" />
     <None Include="src\Shaders\vertex.shader" />
   </ItemGroup>

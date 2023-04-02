@@ -12,12 +12,6 @@ int main()
 		return -1;
 	GLFWwindow* window = Window::m_GlfwWindow;
 
-	Background bg = Background();
-
-	VBO* vbo = new VBO(bg.vertices);
-	EBO* ebo = new EBO(bg.indices);
-	Program* program = new Program(new Shader(GL_VERTEX_SHADER, "backgroundvert.shader"),
-		new Shader(GL_FRAGMENT_SHADER, "backgroundfrag.shader"));
 	World world = World();
 
 	using clock = std::chrono::high_resolution_clock;
@@ -27,8 +21,8 @@ int main()
 
 	while (!glfwWindowShouldClose(window))
 	{
+		glClearColor(.65f, .9f, 1, 1); // Background
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 		t1 = t2;
 		t2 = clock::now();
 		float deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count() / 1000000.0f;
@@ -36,11 +30,6 @@ int main()
 
 		SceneCamera::Move();
 		
-		vbo->Bind();
-		ebo->Bind();
-		program->UseProgram();
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
 		world.Render();
 
 
