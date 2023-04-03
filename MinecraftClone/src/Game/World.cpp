@@ -5,45 +5,68 @@
 World::World()
 {
 	mvp = glm::mat4(1.0f);
+	std::vector<Chunk> chunks;
+	
+	for (int x = 0; x < 8; x++)
+		for (int z = 0; z < 8; z++)
+		{
+			chunks.push_back(Chunk(x, z));
+		}		
+	int n = 0;
+	for (auto& chunk : chunks)
+	{
+		for (auto& v : chunk.vertices)
+		{
+			m_Vertices.push_back(v);
+		}
 
-	m_Chunk = new Chunk();
+		for (auto& uv : chunk.texCoords)
+		{
+			m_TexCoords.push_back(uv);
+		}
+		for (auto& in : chunk.indices)
+		{
+			m_Indices.push_back(in + n * chunk.vertices.size());
+		}
+		n++;
+	}
+	
 
 
-
-	m_Vbo = new VBO(m_Chunk->vertices, m_Chunk->texCoords);
-	m_Ebo = new EBO(m_Chunk->indices);
-	texture = new Texture("Textures/atlas.png");
+	m_Vbo = new VBO(m_Vertices, m_TexCoords);
+	m_Ebo = new EBO(m_Indices);
+	m_Texture = new Texture("Textures/atlas.png");
 	m_Program = new Program(new Shader(GL_VERTEX_SHADER, "vertex.shader"),
 		new Shader(GL_FRAGMENT_SHADER, "fragment.shader"));
 }
 
 void World::AddBlock(const Block& block)
 {
-	for (auto v : block.GetVertices())
+	for (const auto& v : block.m_Vertices)
 	{
-		m_Chunk->vertices.push_back(v);
+		m_Vertices.push_back(v);
 	}
-	for (auto uv : block.GetUV())
+	for (const auto& uv : block.m_TexCoords)
 	{
-		m_Chunk->texCoords.push_back(uv);
+		m_TexCoords.push_back(uv);
 	}
-	for (auto in : block.GetIndices())
+	for (const auto& in : block.m_Indices)
 	{
-		m_Chunk->indices.push_back(m_Chunk->vertices.size() - block.GetVertices().size() + in);
+		//m_Chunk->indices.push_back(m_Chunk->vertices.size() - block.m_Vertices.size() + in);
 	}
 
 	delete m_Vbo;
 	delete m_Ebo;
 
-	m_Vbo = new VBO(m_Chunk->vertices, m_Chunk->texCoords);
-	m_Ebo = new EBO(m_Chunk->indices);
+	m_Vbo = new VBO(m_Vertices, m_TexCoords);
+	m_Ebo = new EBO(m_Indices);
 }
 
 void World::Render()
 {
 	m_Vbo->Bind();
 	m_Ebo->Bind();
-	texture->Bind();
+	m_Texture->Bind();
 	m_Program->UseProgram();
 	
 
@@ -54,5 +77,6 @@ void World::Render()
 		0.1f, 1000.0f);
 	mvp = projection * view;
 	glUniformMatrix4fv(id, 1, false, glm::value_ptr(mvp));
-	glDrawElements(GL_TRIANGLES, m_Chunk->indices.size(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, m_Indices.size(), GL_UNSIGNED_INT, 0);
+	//glDrawArrays(GL_TRIANGLES, 0, m_Chunk->vertices.size());
 }

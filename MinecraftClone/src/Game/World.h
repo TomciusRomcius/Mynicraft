@@ -21,9 +21,12 @@ public:
 	void Render();
 private:
 	Program* m_Program;
-	Texture* texture;
+	Texture* m_Texture;
 	VBO* m_Vbo;
 	EBO* m_Ebo;
+	std::vector<glm::vec3> m_Vertices;
+	std::vector<unsigned int> m_Indices;
+	std::vector<glm::vec2> m_TexCoords;
 	Chunk* m_Chunk;
 	Block* m_Block;
 	glm::mat4 mvp;

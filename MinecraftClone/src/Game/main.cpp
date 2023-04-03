@@ -12,9 +12,9 @@ int main()
 		return -1;
 	GLFWwindow* window = Window::m_GlfwWindow;
 
-	Block block = Block({0, 0, -8}, {2, 0}, 3);
+
 	World world = World();
-	world.AddBlock(block);
+
 
 
 	using clock = std::chrono::high_resolution_clock;

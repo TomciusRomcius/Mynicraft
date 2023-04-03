@@ -2,48 +2,67 @@
 #include "Chunk.h"
 #include "PerlinNoise.hpp"
 
-Chunk::Chunk()
+Chunk::Chunk(int chunkX, int chunkZ)
 {
-	int n = 0; // Used for indice calculations
-	return;
-	siv::PerlinNoise perlin{ 50 };
-	// Generate terrain
+	std::random_device rd;
+	unsigned int seed = rd();
+	siv::PerlinNoise perlin{ seed };
+
+	std::vector<Block> blocks;
+	std::vector<glm::vec3> cubePositions;
+	std::vector<glm::vec3> airBlockPositions;
+
+	// Generate airblocks
+	for (int x = 0; x < MAX_LENGTH; x++)
+	{
+			for (int z = 0; z < MAX_LENGTH; z++)
+			{
+				int height = round(perlin.octave2D_01(x * 0.01f, z * 0.01f, 2, 0.5f) * MAX_HEIGHT);
+				airBlockPositions.push_back({ x + chunkX * MAX_LENGTH, height, z + chunkZ * MAX_LENGTH });
+
+			}
+	}
+
 	for (int x = 0; x < MAX_LENGTH; x++)
 	{
 		for (int y = 0; y < MAX_HEIGHT; y++)
 		{
-
 			for (int z = 0; z < MAX_LENGTH; z++)
 			{
-				// Calculate cube height and don't render the cube if height > noise
-
-				float height = (CUBE_VERTICES[0].y + CUBE_VERTICES[2].y) / 2.f + y;
-				if (height > (perlin.octave2D_01(x * .1f, z * .1f, 1, 0.1f) * MAX_HEIGHT) )
+				glm::vec3 position{ x + chunkX * MAX_LENGTH , y, z + chunkZ * MAX_LENGTH };
+				for (const auto& airBlock : airBlockPositions)
 				{
-					continue;
+					if (glm::distance(position, airBlock) == 1)
+					{
+						blocks.push_back(Block({ position, { 0, 0 }, 3 }));
+					}
 				}
-
-				// Translate the cube
-
-				for (auto v : CUBE_VERTICES)
-				{
-					v += glm::vec3(x, y, z);
-					vertices.push_back(v);
-				}
-				// Translate all the indices
-				for (auto in : CUBE_INDICES)
-				{
-
-					indices.push_back(in + n * 8);
-				}
-				for (auto t : CUBE1T_TEXCOORDS)
-				{
-					texCoords.push_back(t);
-				}
-
-				n++;
 			}
 		}
 	}
 
+	int n = 0;
+
+	for (auto& block : blocks)
+	{
+		for (auto& v : block.m_Vertices)
+		{
+			vertices.push_back(v);
+		}
+		for (auto& in : block.m_Indices)
+		{
+			indices.push_back(in + n * 24); // 24 vertices in a cube
+		}
+		for (auto& uv : block.m_TexCoords)
+		{
+			texCoords.push_back(uv);
+		}
+		n++;
+	}
+}
+
+bool Chunk::IsNeighborAir(glm::vec3 cube)
+{
+
+	return false;
 }
