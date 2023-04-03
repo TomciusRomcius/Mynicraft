@@ -1,14 +1,29 @@
 #include "pch.h"
 #include "Block.h"
 
-Block::Block(glm::vec3 position, std::vector<glm::vec2> uv)
+Block::Block(glm::vec3 position, glm::vec2 atlasPosition, unsigned int texCount)
 {
-	for (int i = 0; i < uv.size(); i++)
+	switch (texCount)
 	{
-		uv[i].x /= 8; // Atlas width: 256, block width: 16
-		uv[i].y /= 8; // Atlas height: 256, block height: 16
+	case 1:
+		m_TexCoords = CUBE1T_TEXCOORDS;
+		break;
+	case 2:
+		m_TexCoords = CUBE2T_TEXCOORDS;
+		break;
+	case 3:
+		m_TexCoords = CUBE3T_TEXCOORDS;
+		break;
+	default:
+		break;
 	}
-	m_TexCoords = uv;
+
+
+	for (auto& uv : m_TexCoords)
+	{
+		uv.x = (uv.x + atlasPosition.x) / 16;  // Atlas width: 256, block width: 16
+		uv.y = (uv.y + atlasPosition.y) / 16;  // Atlas height: 256, block height: 16
+	}
 	for (auto& v : m_Vertices)
 	{
 		v.x += position.x;

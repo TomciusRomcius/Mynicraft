@@ -6,7 +6,7 @@
 class Block
 {
 public:
-	Block(glm::vec3 position, std::vector<glm::vec2> uv);
+	Block(glm::vec3 position, glm::vec2 atlasPosition, unsigned int texCount);
 
 
 	inline const std::vector<glm::vec3>& GetVertices() const

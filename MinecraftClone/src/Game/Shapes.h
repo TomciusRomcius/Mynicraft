@@ -85,16 +85,16 @@
         glm::vec2(1.0f, 1.0f),
 
         // Top face
-        glm::vec2(0.0f, 0.0f),
         glm::vec2(1.0f, 0.0f),
+        glm::vec2(2.0f, 0.0f),
+        glm::vec2(2.0f, 1.0f),
         glm::vec2(1.0f, 1.0f),
-        glm::vec2(0.0f, 1.0f),
 
         // Bottom face
-        glm::vec2(0.0f, 0.0f),
-        glm::vec2(1.0f, 0.0f),
-        glm::vec2(1.0f, 1.0f),
-        glm::vec2(0.0f, 1.0f),
+        glm::vec2(2.0f, 0.0f),
+        glm::vec2(3.0f, 0.0f),
+        glm::vec2(3.0f, 1.0f),
+        glm::vec2(2.0f, 1.0f),
 
         // Left face
         glm::vec2(0.0f, 0.0f),
@@ -113,39 +113,39 @@
     {
         // Front face
         glm::vec2(0.0f, 0.0f),
-        glm::vec2(0.5f, 0.0f),
-        glm::vec2(0.5f, 0.5f),
-        glm::vec2(0.0f, 0.5f),
+        glm::vec2(1.0f, 0.0f),
+        glm::vec2(1.0f, 1.0f),
+        glm::vec2(0.0f, 1.0f),
 
         // Back face
-        glm::vec2(0.5f, 0.0f),
+        glm::vec2(1.0f, 0.0f),
         glm::vec2(0.0f, 0.0f),
-        glm::vec2(0.0f, 0.5f),
-        glm::vec2(0.5f, 0.5f),
+        glm::vec2(0.0f, 1.0f),
+        glm::vec2(1.0f, 1.0f),
 
         // Top face
-        glm::vec2(0.5f, 0.5f),
-        glm::vec2(1.0f, 0.5f),
+        glm::vec2(1.0f, 0.0f),
+        glm::vec2(2.0f, 0.0f),
+        glm::vec2(2.0f, 1.0f),
         glm::vec2(1.0f, 1.0f),
-        glm::vec2(0.5f, 1.0f),
 
         // Bottom face
-        glm::vec2(0.5f, 0.5f),
-        glm::vec2(1.0f, 0.5f),
+        glm::vec2(1.0f, 0.0f),
+        glm::vec2(2.0f, 0.0f),
+        glm::vec2(2.0f, 1.0f),
         glm::vec2(1.0f, 1.0f),
-        glm::vec2(0.5f, 1.0f),
 
         // Left face
         glm::vec2(0.0f, 0.0f),
-        glm::vec2(0.5f, 0.0f),
-        glm::vec2(0.5f, 0.5f),
-        glm::vec2(0.0f, 0.5f),
+        glm::vec2(1.0f, 0.0f),
+        glm::vec2(1.0f, 1.0f),
+        glm::vec2(0.0f, 1.0f),
 
         // Right face
         glm::vec2(0.0f, 0.0f),
-        glm::vec2(0.5f, 0.0f),
-        glm::vec2(0.5f, 0.5f),
-        glm::vec2(0.0f, 0.5f),
+        glm::vec2(1.0f, 0.0f),
+        glm::vec2(1.0f, 1.0f),
+        glm::vec2(0.0f, 1.0f),
     };
 inline std::vector<glm::vec2> CUBE1T_TEXCOORDS =
 {
