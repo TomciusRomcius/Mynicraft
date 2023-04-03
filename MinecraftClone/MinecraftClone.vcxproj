@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\Block.cpp" />
     <ClCompile Include="src\Core\DebugLayer.cpp" />
     <ClCompile Include="src\Core\EBO.cpp" />
     <ClCompile Include="src\Core\Event.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="src\Game\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game\Block.h" />
     <ClInclude Include="src\Core\DebugLayer.h" />
     <ClInclude Include="src\Core\EBO.h" />
     <ClInclude Include="src\Core\Event.h" />

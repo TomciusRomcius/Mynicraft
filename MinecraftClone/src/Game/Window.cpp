@@ -37,7 +37,7 @@ bool Window::Initialize(const char* title, int width, int height)
 	}
 	Engine3D::DebugLayer::Initialize(m_GlfwWindow);
 	Engine3D::Event::Initialize(m_GlfwWindow);
-	//glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 	glViewport(0, 0, m_Width, m_Height);
 
 	return true;

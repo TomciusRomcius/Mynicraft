@@ -6,10 +6,17 @@
 
 Texture::Texture(const char* path)
 {
+	
 	glGenTextures(1, &id);
 	EN_TRACE("Creating a texture id = " + std::to_string(id));
 
 	glBindTexture(GL_TEXTURE_2D, id);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+
 
 	int width, height, channels;
 	unsigned char* data = stbi_load(path, &width, &height, &channels, 0);
@@ -27,6 +34,8 @@ Texture::Texture(const char* path)
 		break;
 	case 3:
 		format = GL_RGB;
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
 		break;
 	case 4:
 		format = GL_RGBA;
@@ -39,10 +48,7 @@ Texture::Texture(const char* path)
 	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
 
 	stbi_image_free(data);
 	EN_INFO("Succesfully loaded texture: " + std::string(path))

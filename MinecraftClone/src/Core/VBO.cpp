@@ -13,9 +13,9 @@ namespace Engine3D
 
 		glBindBuffer(GL_ARRAY_BUFFER, id);
 
-		unsigned int verticesSize = vertices.size() * 3 * sizeof(float);
-		unsigned int normalsSize = normals.size() * 3 * sizeof(float);
-		unsigned int texCoordsSize = texCoords.size() * 2 * sizeof(float);
+		unsigned int verticesSize = vertices.size() * sizeof(glm::vec3);
+		unsigned int normalsSize = normals.size() * sizeof(glm::vec3);
+		unsigned int texCoordsSize = texCoords.size() * sizeof(glm::vec2);
 
 		glBufferData(GL_ARRAY_BUFFER, verticesSize + texCoordsSize, vertices.data(), GL_STATIC_DRAW);
 
@@ -41,16 +41,18 @@ namespace Engine3D
 
 		glBindBuffer(GL_ARRAY_BUFFER, id);
 
-		unsigned int verticesSize = vertices.size() * 3 * sizeof(float);
-		unsigned int texCoordsSize = texCoords.size() * 2 * sizeof(float);
+		unsigned int verticesSize = vertices.size() * sizeof(glm::vec3);
+		unsigned int texCoordsSize = texCoords.size() * sizeof(glm::vec2);
 
 		glBufferData(GL_ARRAY_BUFFER, verticesSize + texCoordsSize, 0, GL_STATIC_DRAW);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, verticesSize, vertices.data());
-		glBufferSubData(GL_ARRAY_BUFFER, verticesSize, texCoordsSize, vertices.data());
+		glBufferSubData(GL_ARRAY_BUFFER, verticesSize, texCoordsSize, texCoords.data());
+		
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)verticesSize);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), nullptr);
 		glEnableVertexAttribArray(0);
+
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec2), (void*)verticesSize);
 		glEnableVertexAttribArray(1);
 
 	}
@@ -67,8 +69,6 @@ namespace Engine3D
 		glBufferData(GL_ARRAY_BUFFER, vertices.size() * 3 * sizeof(float), vertices.data(), GL_STATIC_DRAW);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindVertexArray(0);
 	}
 
 	void VBO::Bind() const

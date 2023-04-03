@@ -12,7 +12,10 @@ int main()
 		return -1;
 	GLFWwindow* window = Window::m_GlfwWindow;
 
+	Block block = Block({0, 0, -8}, CUBE2T_TEXCOORDS);
 	World world = World();
+	world.AddBlock(block);
+
 
 	using clock = std::chrono::high_resolution_clock;
 	
@@ -21,6 +24,8 @@ int main()
 
 	while (!glfwWindowShouldClose(window))
 	{
+		glfwPollEvents();
+
 		glClearColor(.65f, .9f, 1, 1); // Background
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		t1 = t2;
@@ -29,11 +34,13 @@ int main()
 		Time::DeltaTime = deltaTime;
 
 		SceneCamera::Move();
-		
+		glm::mat4 view = SceneCamera::ViewMatrix();
+		glm::mat4 projection = glm::perspective<float>(glm::radians(80.0f),
+			(float)Window::GetWidth() / (float)Window::GetHeight(),
+			0.1f, 1000.0f);
+		glm::mat4 mvp = projection * view;
+
 		world.Render();
-
-
 		glfwSwapBuffers(window);
-		glfwPollEvents();
 	}
 }

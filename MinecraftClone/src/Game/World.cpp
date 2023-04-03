@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "World.h"
+#include "Block.h"
 
 World::World()
 {
@@ -11,9 +12,31 @@ World::World()
 
 	m_Vbo = new VBO(m_Chunk->vertices, m_Chunk->texCoords);
 	m_Ebo = new EBO(m_Chunk->indices);
-	texture = new Texture("Textures/brick.jpg");
+	texture = new Texture("Textures/atlas.png");
 	m_Program = new Program(new Shader(GL_VERTEX_SHADER, "vertex.shader"),
 		new Shader(GL_FRAGMENT_SHADER, "fragment.shader"));
+}
+
+void World::AddBlock(const Block& block)
+{
+	for (auto v : block.GetVertices())
+	{
+		m_Chunk->vertices.push_back(v);
+	}
+	for (auto uv : block.GetUV())
+	{
+		m_Chunk->texCoords.push_back(uv);
+	}
+	for (auto in : block.GetIndices())
+	{
+		m_Chunk->indices.push_back(m_Chunk->vertices.size() - block.GetVertices().size() + in);
+	}
+
+	delete m_Vbo;
+	delete m_Ebo;
+
+	m_Vbo = new VBO(m_Chunk->vertices, m_Chunk->texCoords);
+	m_Ebo = new EBO(m_Chunk->indices);
 }
 
 void World::Render()

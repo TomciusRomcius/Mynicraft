@@ -5,9 +5,8 @@
 Chunk::Chunk()
 {
 	int n = 0; // Used for indice calculations
-
+	return;
 	siv::PerlinNoise perlin{ 50 };
-
 	// Generate terrain
 	for (int x = 0; x < MAX_LENGTH; x++)
 	{
@@ -37,7 +36,7 @@ Chunk::Chunk()
 
 					indices.push_back(in + n * 8);
 				}
-				for (auto t : CUBE_TEXCOORDS)
+				for (auto t : CUBE1T_TEXCOORDS)
 				{
 					texCoords.push_back(t);
 				}
