@@ -15,7 +15,6 @@ using namespace Engine3D;
 class World
 {
 public:
-
 	World();
 	void AddBlock(const Block& block);
 	void Render();

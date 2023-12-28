@@ -6,12 +6,16 @@ World::World()
 {
 	mvp = glm::mat4(1.0f);
 	std::vector<Chunk> chunks;
-	
+
+	/*
 	for (int x = 0; x < 8; x++)
 		for (int z = 0; z < 8; z++)
 		{
 			chunks.push_back(Chunk(x, z));
-		}		
+		}	
+		*/
+
+	chunks.push_back(Chunk(0, 0));
 	int n = 0;
 	for (auto& chunk : chunks)
 	{
@@ -31,8 +35,6 @@ World::World()
 		n++;
 	}
 	
-
-
 	m_Vbo = new VBO(m_Vertices, m_TexCoords);
 	m_Ebo = new EBO(m_Indices);
 	m_Texture = new Texture("Textures/atlas.png");
@@ -69,7 +71,6 @@ void World::Render()
 	m_Texture->Bind();
 	m_Program->UseProgram();
 	
-
 	unsigned int id = glGetUniformLocation(m_Program->Id(), "mvp");
 	glm::mat4 view = SceneCamera::ViewMatrix();
 	glm::mat4 projection = glm::perspective<float>(glm::radians(80.0f),
