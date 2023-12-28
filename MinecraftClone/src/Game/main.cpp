@@ -11,12 +11,7 @@ int main()
 	if (!Window::Initialize("Minycraft", 1280, 720))
 		return -1;
 	GLFWwindow* window = Window::m_GlfwWindow;
-
-
 	World world = World();
-
-
-
 	using clock = std::chrono::high_resolution_clock;
 	
 	auto t1 = clock::now();
@@ -25,7 +20,6 @@ int main()
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
-
 		glClearColor(.65f, .9f, 1, 1); // Background
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		t1 = t2;
