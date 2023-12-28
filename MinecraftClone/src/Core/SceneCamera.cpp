@@ -8,10 +8,10 @@ namespace Engine3D
 		if (!Event::GetMouseButtonDown(GLFW_MOUSE_BUTTON_RIGHT))
 		{
 			Event::CursorMode(GLFW_CURSOR_NORMAL);
+			lastMousePos = Event::mousePos;
 			return;
 		}
 		Event::CursorMode(GLFW_CURSOR_DISABLED);
-
 
 		const float cameraSpeed = 20.f; // adjust accordingly
 		const float sensitivity = 100.f; // adjust accordingly
@@ -24,9 +24,6 @@ namespace Engine3D
 
 		if (pitch > 90.f) pitch = 90.f; // Clamping
 		if (pitch < -90.f) pitch = -89.f;
-
-		std::cout << "Position: " << position.x << " " << position.y << std::endl;
-		std::cout << "Rotation: " << yaw << " " << pitch << std::endl << std::endl;
 
 		// Getting the direction in which the camera is facing
 		direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
