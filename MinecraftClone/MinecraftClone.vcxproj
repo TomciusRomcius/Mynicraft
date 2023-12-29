@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\ChunkRenderer.cpp" />
     <ClCompile Include="src\Game\Block.cpp" />
     <ClCompile Include="src\Core\DebugLayer.cpp" />
     <ClCompile Include="src\Core\EBO.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="src\Game\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game\ChunkRenderer.h" />
     <ClInclude Include="src\Game\Block.h" />
     <ClInclude Include="src\Core\DebugLayer.h" />
     <ClInclude Include="src\Core\EBO.h" />

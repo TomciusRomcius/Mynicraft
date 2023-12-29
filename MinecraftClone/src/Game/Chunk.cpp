@@ -3,82 +3,35 @@
 #include "PerlinNoise.hpp"
 
 Chunk::Chunk(int chunkX, int chunkZ)
+	: chunkX(chunkX), chunkZ(chunkZ), chunkRenderer(chunkX, chunkZ)
 {
+	vertices = {};
+	indices = {};
+	texCoords = {};
 	airBlockPositions = {};
+
 	std::random_device rd;
 	unsigned int seed = rd();
 	siv::PerlinNoise perlin{ seed };
 
-	std::vector<Block> blocks;
-	std::vector<glm::vec3> cubePositions;
-	std::vector<glm::vec3> airBlockPositions;
-
+	// Callback for initial heightmap
+	// Used for blending between chunks
 	this->octave2D_01 = [&](float x, float y) { return perlin.octave2D_01(x, y, 2, 0.5f); };
-	
 
-	vertices = {};
-	indices = {};
-	texCoords = {};
-
-	// Generate airblocks
-	/*
-	for (int x = 0; x < MAX_LENGTH; x++)
-	{
-		for (int z = 0; z < MAX_LENGTH; z++)
-		{
-			int height = round(perlin.octave2D_01(x * 1.3f, z * 1.5f, 2, 0.5f) * MAX_HEIGHT);
-			airBlockPositions.push_back({ x + chunkX * MAX_LENGTH, height, z + chunkZ * MAX_LENGTH });
-		}
-	}
-
-	for (int x = 0; x < MAX_LENGTH; x++)
-	{
-		for (int y = 0; y < MAX_HEIGHT; y++)
-		{
-			for (int z = 0; z < MAX_LENGTH; z++)
-			{
-				glm::vec3 position{ x + chunkX * MAX_LENGTH , y, z + chunkZ * MAX_LENGTH };
-				for (const auto& airBlock : airBlockPositions)
-				{
-					if (glm::distance(position, airBlock) == 1)
-					{
-						blocks.push_back(Block({ position, { 0, 0 }, 3 }));
-					}
-				}
-			}
-		}
-	}
-	*/
-
-
+	// Generate heightmap
 	for (int x = 0; x < MAX_LENGTH; x++) {
 		for (int z = 0; z < MAX_LENGTH; z++) {
 			int height = round(perlin.octave2D_01(x * 0.1, z * 0.1, 2, 0.5f) * MAX_HEIGHT);
 			heightMap[x][z] = height;
 		}
 	}
-
-	int n = 0;
-	/*
-	for (auto& block : blocks)
-	{
-		for (auto& v : block.m_Vertices)
-		{
-			vertices.push_back(v);
-		}
-		for (auto& in : block.m_Indices)
-		{
-			indices.push_back(in + n * 24); // 24 vertices in a cube
-		}
-		for (auto& uv : block.m_TexCoords)
-		{
-			texCoords.push_back(uv);
-		}
-		n++;
-	}
-	*/
 	GenerateMesh();
+	chunkRenderer.Update(vertices, indices, texCoords);
+}
 
+void Chunk::Render()
+{
+	chunkRenderer.Render();
 }
 
 void Chunk::GenerateMesh()
@@ -93,9 +46,6 @@ void Chunk::GenerateMesh()
 	}
 
 	// Generate missing air blocks due to big height differences
-
-
-	// Check all four directions
 	for (int x = 0; x < MAX_LENGTH; x++) {
 		for (int z = 0; z < MAX_LENGTH; z++) {
 			for (int dx = -1; dx <= 1; dx++)
@@ -118,7 +68,6 @@ void Chunk::GenerateMesh()
 	}
 
 	// Generate blocks
-
 	std::vector<Block> blocks;
 
 	for (auto& airBlock : airBlockPositions)
@@ -127,7 +76,6 @@ void Chunk::GenerateMesh()
 	}
 
 	// Generate mesh
-
 	for (int i = 0; i < blocks.size(); i++)
 	{
 		for (auto& v : blocks[i].m_Vertices)
@@ -143,11 +91,4 @@ void Chunk::GenerateMesh()
 			texCoords.push_back(uv);
 		}
 	}
-	
-}
-
-bool Chunk::IsNeighborAir(glm::vec3 cube)
-{
-
-	return false;
 }
