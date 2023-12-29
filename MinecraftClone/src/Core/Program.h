@@ -13,6 +13,5 @@ namespace Engine3D
 		bool Error() const;
 	private:
 		unsigned int id;
-		bool error;
 	};
 }

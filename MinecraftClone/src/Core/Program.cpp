@@ -25,8 +25,4 @@ namespace Engine3D
 	{
 		return id;
 	}
-	bool Program::Error() const
-	{
-		return error;
-	}
 }
