@@ -4,7 +4,7 @@
 #include "Block.h"
 #include "Game/ChunkRenderer.h"
 
-const int MAX_LENGTH = 8;
+const int MAX_LENGTH = 16;
 const int MAX_HEIGHT = 32;
 const float HEIGHT_VARIATION = 10000.0f;
 
@@ -21,10 +21,10 @@ public:
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec3> normals;
 	std::vector<glm::vec2> texCoords;
+	void GenerateMesh();
 private:
 	ChunkRenderer chunkRenderer;
 	// Mesh stuff
-	void GenerateMesh();
 	int chunkX;
 	int chunkZ;
 	std::unordered_set<glm::vec3> airBlockPositions;

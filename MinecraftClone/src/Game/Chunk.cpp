@@ -12,7 +12,7 @@ Chunk::Chunk(int chunkX, int chunkZ)
 
 	std::random_device rd;
 	unsigned int seed = rd();
-	siv::PerlinNoise perlin{ seed };
+	siv::PerlinNoise perlin{ 2 };
 
 	// Callback for initial heightmap
 	// Used for blending between chunks
@@ -25,8 +25,6 @@ Chunk::Chunk(int chunkX, int chunkZ)
 			heightMap[x][z] = height;
 		}
 	}
-	GenerateMesh();
-	chunkRenderer.Update(vertices, indices, texCoords);
 }
 
 void Chunk::Render()
@@ -69,10 +67,29 @@ void Chunk::GenerateMesh()
 
 	// Generate blocks
 	std::vector<Block> blocks;
-
+	std::unordered_set<glm::vec3> terrainBlockPositions;
 	for (auto& airBlock : airBlockPositions)
 	{
-		blocks.push_back(Block({ airBlock, { 0, 0 }, 3 }));
+		if (airBlock.y >= heightMap[airBlock.x][airBlock.z])
+		{
+			for (int dx = -1; dx <= 1; dx++)
+			{
+				for (int dz = -1; dz <= 1; dz++)
+				{
+					if (dx == 0 && dz == 0) continue;
+					if (airBlock.x + dx < 0 || airBlock.x + dx >= MAX_LENGTH || airBlock.z + dz < 0 || airBlock.z + dz >= MAX_LENGTH) continue;
+					if (airBlock.y <= heightMap[airBlock.x + dx][airBlock.z + dz])
+					{
+						terrainBlockPositions.insert({ airBlock.x + dx, airBlock.y, airBlock.z + dz });
+					}
+				}
+			}
+		}
+	}
+
+	for (auto& terrainBlock : terrainBlockPositions)
+	{
+		blocks.push_back(Block(terrainBlock, {0, 1}, 3));
 	}
 
 	// Generate mesh
@@ -91,4 +108,5 @@ void Chunk::GenerateMesh()
 			texCoords.push_back(uv);
 		}
 	}
+	chunkRenderer.Update(vertices, indices, texCoords);
 }

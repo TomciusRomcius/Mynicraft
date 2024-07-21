@@ -27,10 +27,11 @@ void ChunkRenderer::Render()
 
 	unsigned int id = glGetUniformLocation(program->Id(), "mvp");
 	glm::mat4 view = SceneCamera::ViewMatrix();
+	glm::mat4 translate = glm::translate(glm::mat4(1.0f), glm::vec3(chunkX * 16, 0, chunkZ * 16));
 	glm::mat4 projection = glm::perspective<float>(glm::radians(80.0f),
 		(float)Window::GetWidth() / (float)Window::GetHeight(),
 		0.1f, 1000.0f);
-	mvp = projection * view;
+	mvp = projection * view * translate;
 	glUniformMatrix4fv(id, 1, false, glm::value_ptr(mvp));
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 }
